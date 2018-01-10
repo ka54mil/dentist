@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Title</title>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Strona glowna</title>
 </head>
 <body>
-    AAA
+<div th:replace="shared/header :: header('home')"/>
+
+<div id="main" class="container">
+    <span style="font-size: 30pt">
+        Strona główna
+    </span>
+</div>
 </body>
 </html>
