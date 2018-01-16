@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 @Entity
@@ -21,21 +22,19 @@ public class ScheduledTreatment { //Models - baza danych
 
     @Valid
     @ManyToOne(fetch = FetchType.LAZY)
-    //@Column(nullable=false)
-    @JoinColumn(name="price_id", nullable = false) //
-    private Price price;
-
-    @DecimalMin("0")
-    @DecimalMax("1000000")
-    private BigDecimal paid;
+    @JoinColumn(name="treatment_id", nullable = false)
+    private Treatment treatment;
 
     @Valid
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="visit_id", nullable = false)
     private Visit visit;
 
-    @Valid
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="status_id", nullable = false)
-    private Status status;
+    @DecimalMin("0")
+    @DecimalMax("1000000")
+    private BigDecimal paid;
+
+
+    @Size(min = 1, max = 20)
+    private String status;
 }
