@@ -11,17 +11,18 @@ import javax.validation.constraints.DecimalMin;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "sheduled_treatments")
+@Table(name = "scheduled_treatments")
 @Getter @Setter
 @NoArgsConstructor
-public class SheduledTreatment {
+public class ScheduledTreatment { //Models - baza danych
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Valid
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id", nullable = false)
+    //@Column(nullable=false)
+    @JoinColumn(name="price_id", nullable = false) //
     private Price price;
 
     @DecimalMin("0")
@@ -30,11 +31,11 @@ public class SheduledTreatment {
 
     @Valid
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id", nullable = false)
+    @JoinColumn(name="visit_id", nullable = false)
     private Visit visit;
 
     @Valid
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id", nullable = false)
+    @JoinColumn(name="status_id", nullable = false)
     private Status status;
 }
