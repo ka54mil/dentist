@@ -25,4 +25,6 @@ public class Treatment {
 
     @Size(min = 1, max = 36)
     private String name;
+
+    private boolean active;
 }

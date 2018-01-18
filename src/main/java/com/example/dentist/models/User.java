@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
@@ -28,4 +29,13 @@ public class User {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="patient_id", nullable = false)
     private Patient patient;
+
+    @Size(min = 4, max = 36)
+    private String username;
+
+    private String password;
+
+    @Transient//nie będzie odwzorowana w db
+    private String passwordConfirm;
+    private boolean enabled = false;
 }
