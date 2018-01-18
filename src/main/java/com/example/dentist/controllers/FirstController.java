@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class FirstController {
 
-    @RequestMapping(path = "/*")
+    @RequestMapping(path = "/")
     public String home() {
         return "home";
     }
