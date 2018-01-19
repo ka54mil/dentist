@@ -26,6 +26,16 @@
                     </div>
 
                     <div class="form-group">
+                        <input type="text" name="price" th:value="*{price}"
+                               class="form-control" th:classappend="${#fields.hasErrors('price')}?'is-invalid'"
+                               placeholder="cena zabiegu" required="true" autofocus="true"/>
+
+                        <div class="error text-danger" th:if="${#fields.hasErrors('price')}">
+                            <span th:each="err : ${#fields.errors('price')}" th:text="${err}"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <select th:field="*{active}" class="form-control"
                                 th:classappend="${#fields.hasErrors('active')}?'is-invalid'">
                             <option value="false" disabled="true">Aktywny</option>

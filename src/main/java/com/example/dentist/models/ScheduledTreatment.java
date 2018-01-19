@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Table(name = "scheduled_treatments")
 @Getter @Setter
 @NoArgsConstructor
-public class ScheduledTreatment { //Models - baza danych
+public class ScheduledTreatment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

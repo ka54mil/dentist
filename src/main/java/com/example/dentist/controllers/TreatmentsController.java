@@ -2,6 +2,7 @@ package com.example.dentist.controllers;
 
 import com.example.dentist.models.Treatment;
 import com.example.dentist.repositories.TreatmentRepository;
+import com.example.dentist.services.TreatmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,7 +24,7 @@ import java.util.Optional;
 public class TreatmentsController {
 
     @Autowired
-    private TreatmentRepository treatmentRepository;
+    private TreatmentService treatmentService;
 
     @RequestMapping(path = "/treatments")
     public String index(Model model, Pageable pageable) {
@@ -38,7 +39,7 @@ public class TreatmentsController {
             treatments.add(treatment);
         }
 
-        Page page =  new PageImpl<Treatment>(treatments, pageable, treatments.size());
+        Page page =  new PageImpl<>(treatments, pageable, treatments.size());
 
         model.addAttribute("treatmentsPage", page);
 
@@ -61,11 +62,12 @@ public class TreatmentsController {
     public String showForm(Model model, Optional<Long> id){
         Treatment treatment;
         if(id.isPresent()){
+            Long treatmentId = id.get();
             model.addAttribute("action", "edit");
-            treatment = new Treatment(id.get(),
-                    new BigDecimal(id+"."+id).setScale(2,BigDecimal.ROUND_FLOOR),
-                    "Zabieg "+id,
-                    id.get()%4!=0
+            treatment = new Treatment(treatmentId,
+                    new BigDecimal(treatmentId+"."+treatmentId).setScale(2,BigDecimal.ROUND_FLOOR),
+                    "Zabieg "+treatmentId,
+                    treatmentId%4!=0
             );
         } else {
             model.addAttribute("action", "add");
@@ -77,18 +79,24 @@ public class TreatmentsController {
         return "treatments/form";
     }
 
-    @RequestMapping(value="/vehicleForm.html", method= RequestMethod.POST)
+    @RequestMapping(value={"/treatments/add", "/treatments/edit"}, method= RequestMethod.POST)
     public String processForm(@Valid @ModelAttribute("treatment") Treatment treatment, BindingResult errors){
 
-        if(errors.hasErrors()){
-            return "treatments/form";
-        }
+//        if(errors.hasErrors()){
+//            return "treatments/form";
+//        }
 
         return "redirect:/treatments";
     }
 
     @RequestMapping(value="/treatments/deactivate")
     public String deactivate(Model model, Long id){
+
+        return "redirect:/treatments";
+    }
+
+    @RequestMapping(value="/treatments/delete")
+    public String delete(Model model, Long id){
 
         return "redirect:/treatments";
     }

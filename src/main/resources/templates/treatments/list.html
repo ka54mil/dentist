@@ -38,13 +38,13 @@
                 <td>
                     <a th:href="@{/treatments/details(id=${treatment.id})}" th:inline="text">[[${treatment.name}]]</a>
                 </td>
-                <td th:inline="text">[[${treatment.price}]]</td>
+                <td th:inline="text">[[${treatment.price}]] zł</td>
                 <td th:if="${treatment.active}" th:text="#{treatment.active.true}"></td>
                 <td th:unless="${treatment.active}" th:text="#{treatment.active.false}"></td>
                 <td >
-                    <a class="btn btn-danger" th:href="@{treatments/delete(id=${treatment.id})}" th:text="Usuń"></a> <!-- TODO sec:authorize="hasRole('ROLE_ADMIN')"-->
-                    <a class="btn btn-success" th:href="@{treatments/edit(id=${treatment.id})}" th:text="#{edit}"></a>
-                    <a class="btn btn-success" th:href="@{treatments/deactivate(id=${treatment.id})}" th:text="#{deactivate}"></a>
+                    <a class="btn btn-danger" th:href="@{/treatments/delete(id=${treatment.id})}" th:text="Usuń"></a> <!-- TODO sec:authorize="hasRole('ROLE_ADMIN')"-->
+                    <a class="btn btn-success" th:href="@{/treatments/edit(id=${treatment.id})}" th:text="#{edit}"></a>
+                    <a class="btn btn-success" th:href="@{/treatments/deactivate(id=${treatment.id})}" th:text="#{deactivate}"></a>
                 </td>
 
             </tr>
@@ -56,7 +56,7 @@
 
     </div>
 
-    <a class="btn btn-success" href="treatments/add" th:text="#{add_new( #{treatment})}"></a>
+    <a class="btn btn-success" href="/treatments/add" th:text="#{add_new( #{treatment})}"></a>
 
 
 </div>
