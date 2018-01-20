@@ -38,6 +38,19 @@
                         th:class="${pageName eq 'logonForm'}? 'active'">
                         <a th:href="@{/login}">Zaloguj się</a>
                     </li>
+                    <li class="dropdown"> <!--TODO sec:authorize="isAuthenticated()" -->
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Pacjenci<span class="caret"></span>
+                        </a>
+                        <ul class="list-group dropdown-menu">
+                            <li>
+                                <a th:href="@{/patients}">Wyświetl liste pacjentow</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/patients/add}">Dodaj nowego pacjenta listy</a>
+                            </li>
+                        </ul>
+                    </li>
                     <li sec:authorize="isAuthenticated()">
                         <label style="color:grey; margin-top: 15px;">
                             Witaj <span sec:authentication="name"/>!
