@@ -35,8 +35,12 @@
                         <a th:href="@{/registrationForm.html}">Zarejestruj</a>
                     </li>
                     <li sec:authorize="isAnonymous()"
-                        th:class="${pageName eq 'logonForm'}? 'active'">
+                        th:class="${pageName eq 'loginForm'}? 'active'">
                         <a th:href="@{/login}">Zaloguj się</a>
+                    </li>
+                    <li sec:authorize="isAnonymous()"
+                    th:class="${pageName eq 'registerVisit'}? 'active'">
+                        <a th:href="@{/visits}">Rejestracja wizyty</a>
                     </li>
                     <li class="dropdown"> <!--TODO sec:authorize="isAuthenticated()" -->
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
