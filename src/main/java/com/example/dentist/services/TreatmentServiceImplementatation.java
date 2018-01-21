@@ -18,4 +18,24 @@ public class TreatmentServiceImplementatation implements TreatmentService {
     public Page<Treatment> getAllTreatments(Pageable pageable) {
         return treatmentRepository.findAll(pageable);
     }
+
+    @Override
+    public Treatment save(Treatment treatment){
+        return treatmentRepository.save(treatment);
+    }
+
+    @Override
+    public Treatment getById(Long id) {
+        return treatmentRepository.findOne(id);
+    }
+
+    @Override
+    public void delete(Long id){
+        treatmentRepository.delete(id);
+    }
+
+    @Override
+    public boolean exists(Long id){
+        return treatmentRepository.exists(id);
+    }
 }

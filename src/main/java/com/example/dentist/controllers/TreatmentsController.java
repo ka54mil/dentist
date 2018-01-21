@@ -28,31 +28,14 @@ public class TreatmentsController {
 
     @RequestMapping(path = "/treatments")
     public String index(Model model, Pageable pageable) {
-        List<Treatment> treatments = new ArrayList<>();
-        for(int i=pageable.getPageSize()*pageable.getPageNumber()+1;i<=pageable.getPageSize()*(pageable.getPageNumber()+1);i++){
-            Treatment treatment = new Treatment(
-                    (long)i,
-                    new BigDecimal(i+"."+i).setScale(2,BigDecimal.ROUND_FLOOR),
-                    "Zabieg "+i,
-                    i%4!=0
-            );
-            treatments.add(treatment);
-        }
-
-        Page page =  new PageImpl<>(treatments, pageable, treatments.size());
-
-        model.addAttribute("treatmentsPage", page);
+        model.addAttribute("treatmentsPage", treatmentService.getAllTreatments(pageable));
 
         return "treatments/list";
     }
 
     @RequestMapping(path = "/treatments/details")
     public String details(Model model, Long id) {
-        Treatment treatment = new Treatment(id,
-                new BigDecimal(id+"."+id).setScale(2,BigDecimal.ROUND_FLOOR),
-                "Zabieg "+id,
-                id%4!=0
-        );
+        Treatment treatment = treatmentService.getById(id);
         model.addAttribute("treatment", treatment);
 
         return "treatments/details";
@@ -64,11 +47,7 @@ public class TreatmentsController {
         if(id.isPresent()){
             Long treatmentId = id.get();
             model.addAttribute("action", "edit");
-            treatment = new Treatment(treatmentId,
-                    new BigDecimal(treatmentId+"."+treatmentId).setScale(2,BigDecimal.ROUND_FLOOR),
-                    "Zabieg "+treatmentId,
-                    treatmentId%4!=0
-            );
+            treatment = treatmentService.getById(treatmentId);
         } else {
             model.addAttribute("action", "add");
             treatment = new Treatment();
@@ -84,15 +63,21 @@ public class TreatmentsController {
     @RequestMapping(value={"/treatments/add", "/treatments/edit"}, method= RequestMethod.POST)
     public String processForm(@Valid @ModelAttribute("treatment") Treatment treatment, BindingResult errors){
 
-//        if(errors.hasErrors()){
-//            return "treatments/form";
-//        }
+        if(errors.hasErrors()){
+            return "treatments/form";
+        }
+
+        treatmentService.save(treatment);
 
         return "redirect:/treatments";
     }
 
-    @RequestMapping(value="/treatments/deactivate")
-    public String deactivate(Model model, Long id){
+    @RequestMapping(value="/treatments/change_active")
+    public String changeActive(Model model, Long id){
+
+        Treatment treatment = treatmentService.getById(id);
+        treatment.setActive(!treatment.isActive());
+        treatmentService.save(treatment);
 
         return "redirect:/treatments";
     }
@@ -100,6 +85,9 @@ public class TreatmentsController {
     @RequestMapping(value="/treatments/delete")
     public String delete(Model model, Long id){
 
+        if(treatmentService.exists(id)){
+            treatmentService.delete(id);
+        }
         return "redirect:/treatments";
     }
 }

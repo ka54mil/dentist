@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @Table(name = "patients")
 @Getter @Setter
 @NoArgsConstructor
-
+@AllArgsConstructor
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

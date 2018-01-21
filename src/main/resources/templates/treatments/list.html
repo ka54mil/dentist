@@ -13,7 +13,7 @@
     <H1>Cennik</H1>
 
     <div th:if="${treatmentsPage.hasContent() eq false}">
-        <span>Brak pojazdów w bazie</span>
+        <span>Brak zabiegów w bazie</span>
     </div>
     <div th:if="${treatmentsPage.hasContent() eq true}">
 
@@ -42,9 +42,13 @@
                 <td th:if="${treatment.active}" th:text="#{treatment.active.true}"></td>
                 <td th:unless="${treatment.active}" th:text="#{treatment.active.false}"></td>
                 <td >
-                    <a class="btn btn-danger" th:href="@{/treatments/delete(id=${treatment.id})}" th:text="Usuń"></a> <!-- TODO sec:authorize="hasRole('ROLE_ADMIN')"-->
+                    <a class="btn btn-danger" th:href="@{/treatments/delete(id=${treatment.id})}" th:text="Usuń"></a>
+                    <!--sec:authorize="hasRole('ROLE_ADMIN')"-->
                     <a class="btn btn-success" th:href="@{/treatments/edit(id=${treatment.id})}" th:text="#{edit}"></a>
-                    <a class="btn btn-success" th:href="@{/treatments/deactivate(id=${treatment.id})}" th:text="#{deactivate}"></a>
+                    <a class="btn btn-success" th:href="@{/treatments/change_active(id=${treatment.id})}">
+                        <span th:if="${treatment.active}">Dezaktywuj</span>
+                        <span th:unless="${treatment.active}">Aktywuj</span>
+                    </a>
                 </td>
 
             </tr>

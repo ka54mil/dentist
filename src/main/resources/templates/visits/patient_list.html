@@ -46,6 +46,7 @@
                 <td th:inline="text">[[${visit.dentist.patient.first_name}]] [[${visit.dentist.patient.last_name}]]</td>
                 <td >
                     <a class="btn btn-danger" th:href="@{/visits/delete(id=${visit.id})}" th:text="Usuń"></a>
+                    <!--sec:authorize="hasRole('ROLE_ADMIN')"-->
                     <a class="btn btn-success" th:href="@{/visits/edit(id=${visit.id})}" th:text="#{edit}"></a>
                     <a class="btn btn-success" th:href="@{/scheduled_treatments/visit(visit_id=${visit.id})}">Zaplanowane zabiegi</a>
                 </td>

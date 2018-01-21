@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     @Profile(ProfileNames.DATABASE)
@@ -24,7 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .authorizeRequests().antMatchers("/statics/**", "/webjars/**", "/", "/registrationForm.html", "/error.html", "/treatments/**", "/actuator/**", "/**").permitAll()
+                .authorizeRequests()
+                .antMatchers("/statics/**", "/webjars/**", "/", "/registrationForm.html", "/error", "/actuator/**", "/**")
+                .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()

@@ -29,4 +29,5 @@ public class Treatment {
     private String name;
 
     private boolean active;
+
 }

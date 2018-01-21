@@ -1,6 +1,7 @@
 package com.example.dentist.models;
 
 import com.example.dentist.controllers.components.CalculatorComponent;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import java.util.Set;
 @Table(name = "visits")
 @Getter @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Visit {
 
     @Id

@@ -7,4 +7,12 @@ import org.springframework.data.domain.Pageable;
 public interface TreatmentService {
     Page<Treatment> getAllTreatments(Pageable pageable);
 
+    Treatment save(Treatment treatment);
+
+    Treatment getById(Long id);
+
+    void delete(Long id);
+
+    boolean exists(Long id);
+
 }
