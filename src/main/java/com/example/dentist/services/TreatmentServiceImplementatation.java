@@ -30,9 +30,7 @@ public class TreatmentServiceImplementatation implements TreatmentService {
     }
 
     @Override
-    public void delete(Long id){
-        treatmentRepository.delete(id);
-    }
+    public void delete(Long id){ treatmentRepository.delete(id); }
 
     @Override
     public boolean exists(Long id){

@@ -58,22 +58,23 @@ public class PatientsListController {
     }*/
 
     @RequestMapping(value={"/patients/add", "/patients/edit"}, method= RequestMethod.GET)
-    public String showForm(Model model, Patient patient){
-       // Patient patient;
+    public String showForm(Model model, Optional<Long> id){
+       Patient patient;
 
 
+        if(id.isPresent()){
+            Long patientId = id.get();
             model.addAttribute("action", "edit");
+            patient = patientService.getById(patientId);
+        } else {
+            model.addAttribute("action", "add");
             patient = new Patient();
 
-            model.addAttribute("action", "add");
-            patient = new Patient(
-
-            );
-
+        }
 
         model.addAttribute("patient",patient);
 
-        return "patients/pform";
+        return "/patients/pform";
     }
 
     @RequestMapping(value={"/patients/add", "/patients/edit"}, method= RequestMethod.POST)
@@ -82,17 +83,18 @@ public class PatientsListController {
 //        if(errors.hasErrors()){
 //            return "patients/form";
 //        }
-
+        patientService.savePatient(patient);
         return "redirect:/patients";
     }
 
 
-    @Secured("ROLE_ADMIN")
-    @GetMapping(path="/patient/delete", params={"did"})
-    public String deletePatient(long did, HttpServletRequest request){
-        patientService.deletePatient(did);
-        String queryString = prepareQueryString(request.getQueryString());
-        return String.format("redirect:/patients", queryString);//robimy przekierowanie, ale zachowując parametry pageingu
+    @RequestMapping(value="/patients/delete")
+    public String delete(Model model, Long id){
+
+        if(patientService.exists(id)){
+            patientService.delete(id);
+        }
+        return "redirect:/patients";
     }
     private String prepareQueryString(String queryString) {//np., did=20&page=2&size=20
         return queryString.substring(queryString.indexOf("&")+1);//obcinamy parametr did, bo inaczej po przekierowaniu znowu będzie wywołana metoda deleteVihicle
