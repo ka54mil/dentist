@@ -31,4 +31,5 @@ public class VisitsController {
 
         return "visits/patient_list";
     }
+
 }
