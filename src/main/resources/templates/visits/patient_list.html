@@ -10,7 +10,7 @@
 
 <div id="main" class="container">
 
-    <H1 th:inline="text">Lista wizyt pacjenta [[${patient.first_name}]] [[${patient.last_name}]]</H1>
+    <H1 th:inline="text">Lista wizyt pacjenta [[${patient.firstName}]] [[${patient.lastName}]]</H1>
 
     <div th:if="${visitsPage.hasContent() eq false}">
         <span>Brak wizyt w bazie</span>
@@ -43,7 +43,7 @@
                 <td th:inline="text">[[${visit.getPaid()}]] zł</td>
                 <td th:inline="text">[[${#dates.format(visit.createdDate, 'dd-MM-yyyy HH:mm')}]]</td>
                 <td th:inline="text">[[${#dates.format(visit.createdDate, 'dd-MM-yyyy HH:mm')}]]</td>
-                <td th:inline="text">[[${visit.dentist.patient.first_name}]] [[${visit.dentist.patient.last_name}]]</td>
+                <td th:inline="text">[[${visit.dentist.patient.firstName}]] [[${visit.dentist.patient.lastName}]]</td>
                 <td >
                     <a class="btn btn-danger" th:href="@{/visits/delete(id=${visit.id})}" th:text="Usuń"></a>
                     <!--sec:authorize="hasRole('ROLE_ADMIN')"-->

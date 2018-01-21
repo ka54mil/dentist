@@ -12,6 +12,8 @@ public interface VisitService {
 
     Page<Visit> getAllVisits(Pageable pageable);
 
+    Page<Visit> getVisitsByPatientId(Long patient_id,Pageable pageable);
+
     Visit getVisit(Long id);
 
     void delete(Long id);

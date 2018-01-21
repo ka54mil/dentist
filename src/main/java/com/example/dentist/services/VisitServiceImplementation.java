@@ -24,6 +24,11 @@ public class VisitServiceImplementation implements VisitService {
     }
 
     @Override
+    public Page<Visit> getVisitsByPatientId(Long patient_id,Pageable pageable) {
+        return visitRepository.findVisitsByPatient_Id(patient_id, pageable);
+    }
+
+    @Override
     public Visit getVisit(Long id) {
         return visitRepository.findOne(id);
     }
