@@ -58,7 +58,7 @@ public class PatientsController {
 
 
         //do ukończenia!
-        return "redirect:patientList.html";//po udanym dodaniu/edycji przekierowujemy na listę
+        return "patients/list";//po udanym dodaniu/edycji przekierowujemy na listę
     }
     //TODO
     @RequestMapping(path = "/patient/register")

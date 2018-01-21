@@ -18,13 +18,13 @@ public class VisitsController {
     public String patientList(Model model, Pageable pageable, Long patient_id) {
         Patient patient = new Patient();
         patient.setId(patient_id);
-        patient.setFirst_name("Pacjent");
-        patient.setLast_name("Testowy");
+        patient.setFirstName("Pacjent");
+        patient.setLastName("Testowy");
 
         Patient dentistInfo = new Patient();
         dentistInfo.setId(++patient_id);
-        dentistInfo.setFirst_name("Dentysta");
-        dentistInfo.setLast_name("Nowak");
+        dentistInfo.setFirstName("Dentysta");
+        dentistInfo.setLastName("Nowak");
 
         User dentist = new User();
         dentist.setId(2L);

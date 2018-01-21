@@ -8,17 +8,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+@Controller
+@SessionAttributes(names={})
 
 public class PatientsListController {
 
@@ -28,30 +33,31 @@ public class PatientsListController {
     @RequestMapping(value="/patients", method = {RequestMethod.GET, RequestMethod.POST})
     public String showPatientList(Model model, Pageable pageable){
         model.addAttribute("patientListPage", patientService.getAllPatients(pageable));
-        return "patients/list";
+        return "patients/plist";
 
 
-    }/*
+    }
+    @Secured("IS_AUTHENTICATED_FULLY")
+    @RequestMapping(value="/patients/plist", params = "id", method = RequestMethod.GET)
+    public String showPatientDetails(Model model, Long id){
+        //log.info("Pokazywanie szczegółów");
+        model.addAttribute("patient", patientService.getPatient(id));
+        return "PatientDetails";
+    }
 
-    @RequestMapping(path = "/patients")
+
+
+   /* @RequestMapping(path = "/patients")
     public String index(Model model, Pageable pageable) {
         List<Patient> patients = new ArrayList<>();
-        for (int i = pageable.getPageSize() * pageable.getPageNumber() + 1; i <= pageable.getPageSize() * (pageable.getPageNumber() + 1); i++) {
-            Patient patient = new Patient(
 
 
-
-
-
-            );
-            patients.add(patient);
-        }
         Page page =  new PageImpl<Patient>(patients, pageable, patients.size());
 
         model.addAttribute("patientsPage", page);
 
         return "patients/plist";
-    }
+    }*/
 
     @RequestMapping(value={"/patients/add", "/patients/edit"}, method= RequestMethod.GET)
     public String showForm(Model model, Optional<Long> id){
@@ -85,6 +91,6 @@ public class PatientsListController {
     public String deactivate(Model model, Long id){
 
         return "redirect:/patients";
-    }*/
+    }
 
 }

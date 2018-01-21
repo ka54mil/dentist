@@ -16,27 +16,27 @@
                     <h1 th:text="#{${action}}"></h1>
 
                     <div class="form-group">
-                        <input type="text" first_name="first_name" th:value="*{firstName}"
-                               class="form-control" th:classappend="${#fields.hasErrors('name')}?'is-invalid'"
+                        <input type="text" name="firstName" th:value="*{firstName}"
+                               class="form-control" th:classappend="${#fields.hasErrors('firstName')}?'is-invalid'"
                                placeholder="Imie pacjenta" required="true" autofocus="true"/>
 
 
-                        <div class="error text-danger" th:if="${#fields.hasErrors('first_name')}">
-                            <span th:each="err : ${#fields.errors('first_name')}" th:text="${err}"></span>
+                        <div class="error text-danger" th:if="${#fields.hasErrors('firstName')}">
+                            <span th:each="err : ${#fields.errors('firstName')}" th:text="${err}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="lastName" th:value="*{lastName}"
+                               class="form-control" th:classappend="${#fields.hasErrors('lastName')}?'is-invalid'"
+                               placeholder="Nazwisko pacjenta" required="true" autofocus="true"/>
+
+
+                        <div class="error text-danger" th:if="${#fields.hasErrors('lastName')}">
+                            <span th:each="err : ${#fields.errors('lastName')}" th:text="${err}"></span>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <select th:field="*{active}" class="form-control"
-                                th:classappend="${#fields.hasErrors('active')}?'is-invalid'">
-                            <option value="false" disabled="true">Aktywny</option>
-                            <option th:value="true" th:text="#{treatment.active.true}"/>
-                            <option th:value="false" th:text="#{treatment.active.false}"/>
-                        </select>
-                        <div class="error text-danger" th:if="${#fields.hasErrors('active')}">
-                            <p th:each="err : ${#fields.errors('active')}" th:text="${err}"></p>
-                        </div>
-                    </div>
+
 
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-6">

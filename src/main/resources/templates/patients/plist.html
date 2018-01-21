@@ -1,0 +1,62 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Cennik</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div id="main" class="container">
+
+    <H1>Lista Pacjentów</H1>
+
+    <div th:if="${patientListPage.hasContent() eq false}">
+        <span>Brak pacjentów w bazie</span>
+    </div>
+    <div th:if="${patientListPage.hasContent() eq true}">
+
+
+
+        <span th:inline="text">
+           Baza zawiera [[${patientListPage.totalElements}]] pacjent/ów
+        </span>
+
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Imie</th>
+                <th>Nazwisko</th>
+                <th>Opcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="patient : ${patientListPage.content}">
+
+                <td>
+                    <a th:href="@{/patients/details(id=${patient.id})}" th:inline="text">[[${patient.firstName}]]</a>
+                </td>
+                <td th:inline="text">[[${patient.lastName}]] </td>
+                <td th:if="${patient.active}" th:text="#{patient.active.true}"></td>
+                <td th:unless="${patient.active}" th:text="#{patient.active.false}"></td>
+                <td >
+                    <a class="btn btn-danger" th:href="@{/patient/delete(id=${patient.id})}" th:text="Usuń"></a> <!-- TODO sec:authorize="hasRole('ROLE_ADMIN')"-->
+                    <a class="btn btn-success" th:href="@{/patient/edit(id=${patient.id})}" th:text="#{edit}"></a>
+                    <a class="btn btn-success" th:href="@{/patients/deactivate(id=${patient.id})}" th:text="#{deactivate}"></a>
+                </td>
+
+            </tr>
+
+            </tbody>
+        </table>
+
+        <div th:replace="shared/pagination :: pager('/patients', ${patientListPage})"></div>
+
+    </div>
+
+    <a class="btn btn-success" href="/patients/add" th:text="#{add_new( #{patient})}"></a>
+
+
+</div>
+</body>
+</html>
