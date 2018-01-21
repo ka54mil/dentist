@@ -36,13 +36,14 @@
                 <td>
                     <a th:href="@{/patients/details(id=${patient.id})}" th:inline="text">[[${patient.firstName}]]</a>
                 </td>
-                <td th:inline="text">[[${patient.lastName}]] </td>
-                <td th:if="${patient.active}" th:text="#{patient.active.true}"></td>
-                <td th:unless="${patient.active}" th:text="#{patient.active.false}"></td>
+                <td>
+                    <a th:href="@{/patients/details(id=${patient.id})}" th:inline="text">[[${patient.lastName}]]</a>
+                </td>
+
                 <td >
                     <a class="btn btn-danger" th:href="@{/patient/delete(id=${patient.id})}" th:text="Usuń"></a> <!-- TODO sec:authorize="hasRole('ROLE_ADMIN')"-->
                     <a class="btn btn-success" th:href="@{/patient/edit(id=${patient.id})}" th:text="#{edit}"></a>
-                    <a class="btn btn-success" th:href="@{/patients/deactivate(id=${patient.id})}" th:text="#{deactivate}"></a>
+
                 </td>
 
             </tr>

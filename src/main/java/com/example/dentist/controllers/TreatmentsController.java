@@ -72,6 +72,8 @@ public class TreatmentsController {
         } else {
             model.addAttribute("action", "add");
             treatment = new Treatment();
+
+
         }
 
         model.addAttribute("treatment",treatment);

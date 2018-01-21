@@ -11,11 +11,9 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -60,31 +58,44 @@ public class PatientsListController {
     }*/
 
     @RequestMapping(value={"/patients/add", "/patients/edit"}, method= RequestMethod.GET)
-    public String showForm(Model model, Optional<Long> id){
-        Patient patient;
-        if(id.isPresent()){
+    public String showForm(Model model, Patient patient){
+       // Patient patient;
+
+
             model.addAttribute("action", "edit");
+            patient = new Patient();
+
+            model.addAttribute("action", "add");
             patient = new Patient(
 
             );
-        } else {
-            model.addAttribute("action", "add");
-            patient = new Patient();
-        }
+
 
         model.addAttribute("patient",patient);
 
         return "patients/pform";
     }
 
-    @RequestMapping(value="/patientForm.html", method= RequestMethod.POST)
+    @RequestMapping(value={"/patients/add", "/patients/edit"}, method= RequestMethod.POST)
     public String processForm(@Valid @ModelAttribute("patient") Patient patient, BindingResult errors){
 
-        if(errors.hasErrors()){
-            return "patients/pform";
-        }
+//        if(errors.hasErrors()){
+//            return "patients/form";
+//        }
 
         return "redirect:/patients";
+    }
+
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping(path="/patient/delete", params={"did"})
+    public String deletePatient(long did, HttpServletRequest request){
+        patientService.deletePatient(did);
+        String queryString = prepareQueryString(request.getQueryString());
+        return String.format("redirect:/patients", queryString);//robimy przekierowanie, ale zachowując parametry pageingu
+    }
+    private String prepareQueryString(String queryString) {//np., did=20&page=2&size=20
+        return queryString.substring(queryString.indexOf("&")+1);//obcinamy parametr did, bo inaczej po przekierowaniu znowu będzie wywołana metoda deleteVihicle
     }
 
     @RequestMapping(value="/patients/deactivate")
