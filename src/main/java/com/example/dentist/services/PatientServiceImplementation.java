@@ -28,18 +28,23 @@ public class PatientServiceImplementation implements PatientService {
         return null;
     }
 
-    @Override
-    public void deletePatient(Long id) {
-
-    }
 
     @Override
     public void savePatient(Patient patient) {
-
+        patientRepository.save(patient);
+    }
+    @Override
+    public Patient getById(Long id) {
+        return patientRepository.findOne(id);
     }
 
+    @Override
+    public void delete(Long id){ patientRepository.delete(id); }
 
-
+    @Override
+    public boolean exists(Long id){
+        return patientRepository.exists(id);
+    }
 
 
 }

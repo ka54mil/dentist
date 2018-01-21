@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,6 +67,16 @@ public class TreatmentsController {
         if(errors.hasErrors()){
             return "treatments/form";
         }
+        Long id = treatment.getId();
+        if(id != null){
+            Treatment oldTreatment = treatmentService.getById(id);
+
+            if(!oldTreatment.getPrice().equals(treatment.getPrice()) && treatmentService.isAssignedToAnyScheduledTreatment(id)){
+                oldTreatment.setActive(false);
+                treatmentService.save(oldTreatment);
+                treatment.setId(null);
+            }
+        }
 
         treatmentService.save(treatment);
 
@@ -73,7 +84,7 @@ public class TreatmentsController {
     }
 
     @RequestMapping(value="/treatments/change_active")
-    public String changeActive(Model model, Long id){
+    public String changeActive(Long id){
 
         Treatment treatment = treatmentService.getById(id);
         treatment.setActive(!treatment.isActive());
@@ -86,6 +97,10 @@ public class TreatmentsController {
     public String delete(Model model, Long id){
 
         if(treatmentService.exists(id)){
+            if(treatmentService.isAssignedToAnyScheduledTreatment(id)){
+                model.addAttribute("treatment",treatmentService.getById(id));
+                return "/treatments/can_not_delete";
+            }
             treatmentService.delete(id);
         }
         return "redirect:/treatments";
