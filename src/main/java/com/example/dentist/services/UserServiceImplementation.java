@@ -1,10 +1,13 @@
 package com.example.dentist.services;
 
 
+import com.example.dentist.models.Patient;
 import com.example.dentist.repositories.RoleRepository;
 import com.example.dentist.repositories.UserRepository;
 import com.example.dentist.models.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -69,5 +72,42 @@ public class UserServiceImplementation implements UserService {
         user.setPasswordConfirm(null);//wyzerowanie jest potrzebne ze względu na walidację
         userRepository.saveAndFlush(user);
     }
+
+        @Override
+        public Page<User> getAllUsers(Pageable pageable) {
+            return userRepository.findAll(pageable);
+
+        }
+
+        @Override
+        public User getUser(Long id) {
+            return null;
+        }
+
+
+        @Override
+        public void saveUser(User user) {
+            userRepository.save(user);
+        }
+        @Override
+        public User getById(Long id) {
+            return userRepository.findOne(id);
+        }
+
+        @Override
+        public void delete(Long id){ userRepository.delete(id); }
+
+        @Override
+        public boolean exists(Long id){
+            return userRepository.exists(id);
+        }
+
+
+    }
+
+
+
+
+
 
 }

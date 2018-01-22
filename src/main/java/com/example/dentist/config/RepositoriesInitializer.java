@@ -36,8 +36,8 @@ public class RepositoriesInitializer {
 
             if(roleRepository.findAll().isEmpty() == true){
                 try {
-                    Role roleUser = roleRepository.save(new Role(Role.Types.ROLE_USER));
-                    Role roleAdmin = roleRepository.save(new Role(Role.Types.ROLE_ADMIN));
+                    Role roleUser = roleRepository.save(new Role("ROLE_USER"));
+                    Role roleAdmin = roleRepository.save(new Role("ROLE_ADMIN"));
                     Patient userPatient = patientRepository.save(new Patient(null, "First", "User"));
                     Patient adminPatient = patientRepository.save(new Patient(null, "Second", "Admin"));
 

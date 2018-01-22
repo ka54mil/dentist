@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
@@ -19,13 +20,13 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private Types type;
+    @Size(min = 1, max = 50)
+    private String type;
 
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
-    public Role(Types type){
+    public Role(String type){
         this.type = type;
     }
 
