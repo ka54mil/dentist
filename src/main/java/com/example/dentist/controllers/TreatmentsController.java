@@ -64,9 +64,9 @@ public class TreatmentsController {
     @RequestMapping(value={"/treatments/add", "/treatments/edit"}, method= RequestMethod.POST)
     public String processForm(@Valid @ModelAttribute("treatment") Treatment treatment, BindingResult errors){
 
-        if(errors.hasErrors()){
-            return "treatments/form";
-        }
+//        if(errors.hasErrors()){
+//            return "treatments/form";
+//        }
         Long id = treatment.getId();
         if(id != null){
             Treatment oldTreatment = treatmentService.getById(id);
