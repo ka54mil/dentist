@@ -1,7 +1,6 @@
 package com.example.dentist.services;
 
 
-import com.example.dentist.models.Patient;
 import com.example.dentist.repositories.RoleRepository;
 import com.example.dentist.repositories.UserRepository;
 import com.example.dentist.models.Role;
@@ -74,23 +73,23 @@ public class UserServiceImplementation implements UserService {
     }
 
         @Override
-        public Page<User> getAllUsers(Pageable pageable) {
+        public Page<com.example.dentist.models.User> getAllUsers(Pageable pageable) {
             return userRepository.findAll(pageable);
 
         }
 
         @Override
-        public User getUser(Long id) {
+        public com.example.dentist.models.User getUser(Long id) {
             return null;
         }
 
+    @Override
+    public void saveUser(com.example.dentist.models.User user) {
+
+    }
 
         @Override
-        public void saveUser(User user) {
-            userRepository.save(user);
-        }
-        @Override
-        public User getById(Long id) {
+        public com.example.dentist.models.User getById(Long id) {
             return userRepository.findOne(id);
         }
 
@@ -104,10 +103,3 @@ public class UserServiceImplementation implements UserService {
 
 
     }
-
-
-
-
-
-
-}
