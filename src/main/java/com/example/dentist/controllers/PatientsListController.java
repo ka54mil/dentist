@@ -28,6 +28,8 @@ public class PatientsListController {
     @Autowired
     private PatientService patientService;
 
+    @RequestMapping(path = "/patients")
+
     @RequestMapping(value="/patients", method = {RequestMethod.GET, RequestMethod.POST})
     public String showPatientList(Model model, Pageable pageable){
         model.addAttribute("patientListPage", patientService.getAllPatients(pageable));
