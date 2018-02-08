@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PatientServiceImplementation implements PatientService {
 
@@ -20,6 +22,12 @@ public class PatientServiceImplementation implements PatientService {
     @Override
     public Page<Patient> getAllPatients(Pageable pageable) {
         return patientRepository.findAll(pageable);
+
+    }
+
+    @Override
+    public List<Patient> getAllPatients2() {
+        return patientRepository.findAll();
 
     }
 

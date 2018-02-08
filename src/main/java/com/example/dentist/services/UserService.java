@@ -14,6 +14,7 @@ public interface UserService extends UserDetailsService {
 
     User getUser(Long id);
 
+    User getRole(Long id);
 
     void saveUser(User user);
 

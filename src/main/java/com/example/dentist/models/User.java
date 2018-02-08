@@ -27,6 +27,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
+
+
     @Valid
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="patient_id", nullable = false)

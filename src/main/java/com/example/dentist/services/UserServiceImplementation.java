@@ -72,7 +72,9 @@ public class UserServiceImplementation implements UserService {
         userRepository.saveAndFlush(user);
     }
 
-        @Override
+
+
+    @Override
         public Page<com.example.dentist.models.User> getAllUsers(Pageable pageable) {
             return userRepository.findAll(pageable);
 
@@ -82,6 +84,11 @@ public class UserServiceImplementation implements UserService {
         public com.example.dentist.models.User getUser(Long id) {
             return null;
         }
+
+    @Override
+    public com.example.dentist.models.User getRole(Long id) {
+        return null;
+    }
 
     @Override
     public void saveUser(com.example.dentist.models.User user) {
@@ -102,4 +109,5 @@ public class UserServiceImplementation implements UserService {
         }
 
 
-    }
+
+}

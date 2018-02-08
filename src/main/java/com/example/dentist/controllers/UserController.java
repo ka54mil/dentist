@@ -1,5 +1,6 @@
 package com.example.dentist.controllers;
 
+import com.example.dentist.models.Patient;
 import com.example.dentist.models.Role;
 import com.example.dentist.models.User;
 import com.example.dentist.services.RoleService;
@@ -7,14 +8,19 @@ import com.example.dentist.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.validation.Valid;
 import java.util.Optional;
+
+@Controller
+@SessionAttributes(names={})
 
 public class UserController {
 
@@ -34,6 +40,7 @@ public class UserController {
     public String showUserDetails(Model model, Long id){
         //log.info("Pokazywanie szczegółów");
         model.addAttribute("user", userService.getUser(id));
+        model.addAttribute("role", userService.getRole(id));
         return "UserDetails";
     }
 
@@ -57,6 +64,9 @@ public class UserController {
 
         return "/users/uform";
     }
+
+
+
 
     @RequestMapping(value={"/users/add", "/users/edit"}, method= RequestMethod.POST)
     public String processForm(@Valid @ModelAttribute("user") User user, BindingResult errors){

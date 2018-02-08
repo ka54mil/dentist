@@ -35,6 +35,7 @@ public class PatientsListController {
 
 
     }
+
     @Secured("IS_AUTHENTICATED_FULLY")
     @RequestMapping(value="/patients/plist", params = "id", method = RequestMethod.GET)
     public String showPatientDetails(Model model, Long id){
@@ -77,6 +78,26 @@ public class PatientsListController {
         return "/patients/pform";
     }
 
+    @RequestMapping(value={"/patients/add2", "/patients/edit2"}, method= RequestMethod.GET)
+    public String showForm2(Model model, Optional<Long> id){
+        Patient patient;
+
+
+        if(id.isPresent()){
+            Long patientId = id.get();
+            model.addAttribute("action", "edit");
+            patient = patientService.getById(patientId);
+        } else {
+            model.addAttribute("action", "add");
+            patient = new Patient();
+
+        }
+
+        model.addAttribute("patient",patient);
+
+        return "/users/add";
+    }
+
     @RequestMapping(value={"/patients/add", "/patients/edit"}, method= RequestMethod.POST)
     public String processForm(@Valid @ModelAttribute("patient") Patient patient, BindingResult errors){
 
@@ -105,5 +126,7 @@ public class PatientsListController {
 
         return "redirect:/patients";
     }
+
+
 
 }

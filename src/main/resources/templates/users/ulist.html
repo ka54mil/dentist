@@ -2,7 +2,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <div th:replace="shared/header :: header-css"/>
-    <title>Cennik</title>
+    <title>Lista użytowników</title>
 </head>
 <body>
 <div th:replace="shared/header :: header('home')"/>
@@ -12,14 +12,14 @@
     <H1>Lista Użytkowników</H1>
 
     <div th:if="${userListPage.hasContent() eq false}">
-        <span>Brak pacjentów w bazie</span>
+        <span>Brak użytkowników w bazie</span>
     </div>
-    <div th:if="${patientListPage.hasContent() eq true}">
+    <div th:if="${userListPage.hasContent() eq true}">
 
 
 
         <span th:inline="text">
-           Baza zawiera [[${patientListPage.totalElements}]] pacjent/ów
+           Baza zawiera [[${userListPage.totalElements}]] użytkownik/ów
         </span>
 
         <table class="table table-striped">
@@ -27,22 +27,34 @@
             <tr>
                 <th>Imie</th>
                 <th>Nazwisko</th>
+                <th>Username</th>
+                <th>Rola</th>
                 <th>Opcje</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="patient : ${patientListPage.content}">
+            <tr th:each="user : ${userListPage.content}">
 
                 <td>
-                    <a th:href="@{/patients/details(id=${patient.id})}" th:inline="text">[[${patient.firstName}]]</a>
+                    <a th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.patient.firstName}]]</a>
                 </td>
                 <td>
-                    <a th:href="@{/patients/details(id=${patient.id})}" th:inline="text">[[${patient.lastName}]]</a>
+                    <a th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.patient.lastName}]]</a>
                 </td>
+                <td>
+                    <a th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.username}]]</a>
+                </td>
+
+                <td sec:authorize="isAuthenticated()">
+                    <span th:each="role: ${#authentication.getAuthorities()}">
+                        <span th:text="${role}"/>
+                    </span>
+                </td>
+
 
                 <td >
-                    <a class="btn btn-danger" th:href="@{/patients/delete(id=${patient.id})}" th:text="Usuń"></a> <!-- TODO sec:authorize="hasRole('ROLE_ADMIN')"-->
-                    <a class="btn btn-success" th:href="@{/patients/edit(id=${patient.id})}" th:text="#{edit}"></a>
+                    <a class="btn btn-danger" th:href="@{/users/delete(id=${user.id})}" th:text="Usuń"></a> <!-- TODO sec:authorize="hasRole('ROLE_ADMIN')"-->
+                    <a class="btn btn-success" th:href="@{/users/edit(id=${user.id})}" th:text="#{edit}"></a>
 
                 </td>
 
@@ -51,13 +63,13 @@
             </tbody>
         </table>
 
-        <div th:replace="shared/pagination :: pager('/patients', ${patientListPage})"></div>
+        <div th:replace="shared/pagination :: pager('/users', ${userListPage})"></div>
 
     </div>
 
 
 
-    <a class="btn btn-success" href="/patients/add" th:text="#{add_new( #{patient})}"></a>
+    <a class="btn btn-success" href="/users/add" >Dodaj nowego użytkownika</a>
 </div>
 </body>
 </html>
